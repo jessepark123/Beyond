@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "BE_CPPCharacter.generated.h"
 #include <iostream>
 #include <string>
+#include "BE_CPPCharacter.generated.h"
+
 
 
 class UInputComponent;
@@ -60,13 +61,13 @@ public:
 		int AmmoType_Temp = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		AActor LockableActor;
+		AActor* LockableActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool RightBumperPressed = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		AActor EmptyActor;
+		AActor* EmptyActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FString LockOnText = "LB";

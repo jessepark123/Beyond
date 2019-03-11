@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "BE_CPPProjectile.generated.h"
+
 
 UCLASS(config=Game)
 class ABE_CPPProjectile : public AActor
@@ -19,9 +21,18 @@ class ABE_CPPProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	class UProjectileMovementComponent* ProjectileMovement;
 
+	
+
 public:
 	ABE_CPPProjectile();
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		UParticleSystem*  BulletParticle;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Audio)
+		USoundCue* A_Explosion;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		AActor* Player = GetWorld()->GetFirstPlayerController()->GetPawn();
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);

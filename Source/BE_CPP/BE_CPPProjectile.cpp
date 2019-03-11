@@ -3,6 +3,9 @@
 #include "BE_CPPProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
+#include "Engine.h"
+#include "BE_CPPCharacter.h"
+#include <iostream>
 
 ABE_CPPProjectile::ABE_CPPProjectile() 
 {
@@ -33,11 +36,15 @@ ABE_CPPProjectile::ABE_CPPProjectile()
 
 void ABE_CPPProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	// Only add impulse and destroy projectile if we hit a physics
-	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
-	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+	FName SocketName = "";
 
-		Destroy();
+	if (OtherActor != nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Hit"));
 	}
+	UGameplayStatics::SpawnEmitterAttached(BulletParticle, HitComp, SocketName, FVector(0, 0, 0), FRotator(0, 0, 0), FVector(0, 0, 0), EAttachLocation::KeepRelativeOffset, true, EPSCPoolMethod::None);
+	
+	UGameplayStatics::PlaySoundAtLocation(Player, A_Explosion, FVector(this->GetActorLocation()), 1.0F, 1.0F, 0.0F);
+	
+	Destroy();
 }
